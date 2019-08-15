@@ -18,37 +18,37 @@ namespace PrimeNumbers
                 return new int[0];
 
             // declarations
-            int s = maxValue + 1; // size of array
-            bool[] f = new bool[s];
+            int sizeOfArray = maxValue + 1; // size of array
+            bool[] isPrimeArray = new bool[sizeOfArray];
             int i;
 
             // initialize array to true.
-            for (i = 0; i < s; i++)
-                f[i] = true;
+            for (i = 0; i < sizeOfArray; i++)
+                isPrimeArray[i] = true;
             // get rid of known non-primes
-            f[0] = f[1] = false;
+            isPrimeArray[0] = isPrimeArray[1] = false;
             // sieve
             int j;
-            for (i = 2; i < Math.Sqrt(s) + 1; i++)
+            for (i = 2; i < Math.Sqrt(sizeOfArray) + 1; i++)
             {
-                if (f[i]) // if i is uncrossed, cross its multiples.
+                if (isPrimeArray[i]) // if i is uncrossed, cross its multiples.
                 {
-                    for (j = 2 * i; j < s; j += i)
-                        f[j] = false; // multiple is not prime
+                    for (j = 2 * i; j < sizeOfArray; j += i)
+                        isPrimeArray[j] = false; // multiple is not prime
                 }
             }
             // how many primes are there?
             int count = 0;
-            for (i = 0; i < s; i++)
+            for (i = 0; i < sizeOfArray; i++)
             {
-                if (f[i])
+                if (isPrimeArray[i])
                     count++; // bump count.
             }
             int[] primes = new int[count];
             // move the primes into the result
-            for (i = 0, j = 0; i < s; i++)
+            for (i = 0, j = 0; i < sizeOfArray; i++)
             {
-                if (f[i]) // if prime
+                if (isPrimeArray[i]) // if prime
                     primes[j++] = i;
             }
             return primes; // return the primes
