@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace PrimeNumbers
 {
@@ -22,9 +23,7 @@ namespace PrimeNumbers
             bool[] isPrimeArray = new bool[sizeOfArray];
             int i;
 
-            // initialize array to true.
-            for (i = 0; i < sizeOfArray; i++)
-                isPrimeArray[i] = true;
+            isPrimeArray = InitializeArray(sizeOfArray);
             // get rid of known non-primes
             isPrimeArray[0] = isPrimeArray[1] = false;
             // sieve
@@ -52,6 +51,14 @@ namespace PrimeNumbers
                     primes[j++] = i;
             }
             return primes; // return the primes
+        }
+
+        private static bool[] InitializeArray(int sizeOfArray)
+        {
+            return Enumerable
+                .Range(0, sizeOfArray)
+                .Select(n => true)
+                .ToArray();
         }
     }
 }
