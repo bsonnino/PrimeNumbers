@@ -26,19 +26,16 @@ namespace PrimeNumbers
             isPrimeArray = InitializeArray(sizeOfArray);
             int j;
             Sieve(isPrimeArray);
-            int count = CountPrimes(isPrimeArray);
-            int[] primes = new int[count];
-            // move the primes into the result
-            for (i = 0, j = 0; i < sizeOfArray; i++)
-            {
-                if (isPrimeArray[i]) // if prime
-                    primes[j++] = i;
-            }
+            int[] primes = MovePrimes(isPrimeArray);
             return primes; // return the primes
         }
 
-        private static int CountPrimes(bool[] isPrimeArray) => 
-            isPrimeArray.Count(i => i);
+        private static int[] MovePrimes(bool[] isPrimeArray) =>
+            isPrimeArray
+                .Select((p, i) => new { Index = i, IsPrime = p })
+                .Where(v => v.IsPrime)
+                .Select(v => v.Index)
+                .ToArray();
 
         private static void Sieve(bool[] isPrimeArray)
         {
