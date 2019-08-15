@@ -10,24 +10,15 @@ namespace PrimeNumbers
 */
     public class GeneratePrimes
     {
-        /**
-        * @param maxValue is the generation limit.
-*/
-        public static int[] generatePrimes(int maxValue)
+        
+        public static int[] GetPrimes(int maxValue)
         {
             if (maxValue < 2)
                 return new int[0];
 
-            // declarations
-            int sizeOfArray = maxValue + 1; // size of array
-            bool[] isPrimeArray = new bool[sizeOfArray];
-            int i;
-
-            isPrimeArray = InitializeArray(sizeOfArray);
-            int j;
+            bool[] isPrimeArray = InitializeArray(maxValue);
             Sieve(isPrimeArray);
-            int[] primes = MovePrimes(isPrimeArray);
-            return primes; // return the primes
+            return MovePrimes(isPrimeArray);
         }
 
         private static int[] MovePrimes(bool[] isPrimeArray) =>
@@ -56,7 +47,7 @@ namespace PrimeNumbers
         private static bool[] InitializeArray(int sizeOfArray)
         {
             return Enumerable
-                .Range(0, sizeOfArray)
+                .Range(0, sizeOfArray+1)
                 .Select(n => true)
                 .ToArray();
         }
