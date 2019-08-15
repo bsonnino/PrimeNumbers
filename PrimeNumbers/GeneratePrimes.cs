@@ -24,18 +24,8 @@ namespace PrimeNumbers
             int i;
 
             isPrimeArray = InitializeArray(sizeOfArray);
-            // get rid of known non-primes
-            isPrimeArray[0] = isPrimeArray[1] = false;
-            // sieve
             int j;
-            for (i = 2; i < Math.Sqrt(sizeOfArray) + 1; i++)
-            {
-                if (isPrimeArray[i]) // if i is uncrossed, cross its multiples.
-                {
-                    for (j = 2 * i; j < sizeOfArray; j += i)
-                        isPrimeArray[j] = false; // multiple is not prime
-                }
-            }
+            Sieve(isPrimeArray);
             // how many primes are there?
             int count = 0;
             for (i = 0; i < sizeOfArray; i++)
@@ -51,6 +41,22 @@ namespace PrimeNumbers
                     primes[j++] = i;
             }
             return primes; // return the primes
+        }
+
+        private static void Sieve(bool[] isPrimeArray)
+        {
+            var sizeOfArray = isPrimeArray.Length;
+
+            isPrimeArray[0] = isPrimeArray[1] = false;
+
+            for (int i = 2; i < Math.Sqrt(sizeOfArray) + 1; i++)
+            {
+                if (isPrimeArray[i]) // if i is uncrossed, cross its multiples.
+                {
+                    for (int j = 2 * i; j < sizeOfArray; j += i)
+                        isPrimeArray[j] = false; 
+                }
+            }
         }
 
         private static bool[] InitializeArray(int sizeOfArray)
