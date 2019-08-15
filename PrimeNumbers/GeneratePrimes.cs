@@ -8,27 +8,27 @@ namespace PrimeNumbers
            * maximum. The algorithm used is the Sieve of Eratosthenes.
            *  https://en.wikipedia.org/wiki/Sieve_of_Eratosthenes   
 */
-    public class GeneratePrimes
+    public static class GeneratePrimes
     {
         
-        public static int[] GetPrimes(int maxValue)
+        public static int[] PrimesSmallerOrEqual(this int maxValue)
         {
             if (maxValue < 2)
                 return new int[0];
 
-            bool[] isPrimeArray = InitializeArray(maxValue);
-            Sieve(isPrimeArray);
-            return MovePrimes(isPrimeArray);
+            return maxValue.InitializeArray()
+                .Sieve()
+                .MovePrimes();
         }
 
-        private static int[] MovePrimes(bool[] isPrimeArray) =>
+        private static int[] MovePrimes(this bool[] isPrimeArray) =>
             isPrimeArray
                 .Select((p, i) => new { Index = i, IsPrime = p })
                 .Where(v => v.IsPrime)
                 .Select(v => v.Index)
                 .ToArray();
 
-        private static void Sieve(bool[] isPrimeArray)
+        private static bool[] Sieve(this bool[] isPrimeArray)
         {
             var sizeOfArray = isPrimeArray.Length;
 
@@ -42,9 +42,10 @@ namespace PrimeNumbers
                         isPrimeArray[j] = false;
                 }
             }
+            return isPrimeArray;
         }
 
-        private static bool[] InitializeArray(int sizeOfArray)
+        private static bool[] InitializeArray(this int sizeOfArray)
         {
             return Enumerable
                 .Range(0, sizeOfArray+1)
